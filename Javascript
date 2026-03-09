@@ -1,0 +1,135 @@
+# Install dependency
+# pip install python-pptx
+
+from pptx import Presentation
+from pptx.util import Pt
+from pptx.dml.color import RGBColor
+
+def add_slide(prs, title_text, bullet_points):
+    slide_layout = prs.slide_layouts[1]  # Title + Content
+    slide = prs.slides.add_slide(slide_layout)
+
+    # Title
+    title = slide.shapes.title
+    title.text = title_text
+    title.text_frame.paragraphs[0].font.size = Pt(36)
+    title.text_frame.paragraphs[0].font.bold = True
+
+    # Body
+    body = slide.placeholders[1]
+    body.text = bullet_points[0]
+
+    for point in bullet_points[1:]:
+        p = body.text_frame.add_paragraph()
+        p.text = point
+        p.level = 0
+
+    # Style body text
+    for paragraph in body.text_frame.paragraphs:
+        paragraph.font.size = Pt(20)
+
+def create_presentation():
+
+    prs = Presentation()
+
+    slides = [
+        ("AI Impact Summit",
+        ["Key Market Signals & Ecosystem Observations",
+        "Presented by: [Your Name]"]),
+
+        ("Executive Summary",
+        ["AI ecosystem shifting toward product-led adoption",
+        "Rise of plug-and-play AI platforms",
+        "AI agents embedding across enterprise functions",
+        "GPU efficiency becoming a strategic factor",
+        "Data readiness remains foundational"]),
+
+        ("Industry Shift",
+        ["Enterprise AI moving from experimentation to deployment",
+        "Pre-built AI solutions enabling faster adoption",
+        "Operational AI becoming part of business workflows",
+        "Platform ecosystems replacing custom-heavy builds"]),
+
+        ("Product-Led AI Ecosystem",
+        ["Limited presence of traditional service providers",
+        "Majority of participants were AI startups and platforms",
+        "Growing focus on ready-to-deploy AI modules"]),
+
+        ("Plug-and-Play AI Platforms",
+        ["Subscription-based AI platforms emerging",
+        "Libraries of pre-built AI agents",
+        "Rapid deployment with minimal engineering effort",
+        "Integration with existing enterprise systems"]),
+
+        ("AI Agents Across Enterprise Functions",
+        ["Sales agents qualifying leads and delivering demos",
+        "HR agents screening candidates",
+        "Manufacturing agents supporting operations",
+        "Safety and compliance monitoring agents"]),
+
+        ("Autonomous Revenue Funnel",
+        ["AI-powered marketing engagement",
+        "Automated lead qualification",
+        "Integration with AI sales agents",
+        "Continuous AI-driven nurturing"]),
+
+        ("Omnichannel AI Customer Service",
+        ["Support across chat, voice, email, and social",
+        "Integration with CRM and backend systems",
+        "Real-time responses and continuous learning"]),
+
+        ("GPU Optimization Trend",
+        ["Increasing GPU demand for AI workloads",
+        "Vendors focusing on GPU optimization",
+        "Model compression and inference efficiency",
+        "Performance-based pricing models"]),
+
+        ("AI + Hardware Convergence",
+        ["Smart manufacturing and robotics",
+        "Industrial IoT and sensor analytics",
+        "Mining and heavy industry optimization",
+        "Healthcare edge devices"]),
+
+        ("Data Readiness",
+        ["Database restructuring and modernization",
+        "Data cleansing and normalization",
+        "Data platform architecture improvements",
+        "Governance and security frameworks"]),
+
+        ("AI Ecosystem Architecture",
+        ["Business outcomes layer",
+        "AI application and agent platforms",
+        "Orchestration and model layer",
+        "Infrastructure and GPU layer",
+        "Data and governance foundation"]),
+
+        ("Competitive Landscape",
+        ["Growth of AI-native startups",
+        "Platform-based AI ecosystems expanding",
+        "Increased collaboration across AI vendors"]),
+
+        ("Competitive Risks",
+        ["Direct enterprise subscription to AI platforms",
+        "Product vendors embedding services",
+        "Competition for specialized AI talent"]),
+
+        ("Key Takeaways",
+        ["AI ecosystems becoming platform-driven",
+        "AI agents emerging as operational tools",
+        "Infrastructure efficiency gaining importance",
+        "AI expanding into hardware environments",
+        "Data readiness remains critical"]),
+
+        ("Conclusion",
+        ["AI evolving into a multi-layer enterprise ecosystem",
+        "Next phase driven by data, infrastructure, platforms, and AI agents"])
+    ]
+
+    for title, bullets in slides:
+        add_slide(prs, title, bullets)
+
+    prs.save("AI_Impact_Summit_Presentation.pptx")
+    print("Presentation generated successfully!")
+
+if __name__ == "__main__":
+    create_presentation()
